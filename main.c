@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "libs/arvore.h"
 
+#define DEBUG
+
 /*
  * Assumindo que OPTIMAL-BST(p, q, n) - return e, root
  * aonde 'p' e 'q' são as frequencias de acesso (válido, inválido)
@@ -58,7 +60,7 @@ void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
 }
 
 int main(int argc, char *argv[]){
-    int n, i;
+    int n, i, j;
     ArvoreInt a;    // Arvore de Inteiros
 
     // Inicializa a arvore
@@ -91,6 +93,24 @@ int main(int argc, char *argv[]){
 
     /* Optimal BST */
     optimalBST(p, q, n, e, r);
+
+#ifdef DEBUG
+    // Printa o custo da matriz e
+    printf("DEBUG - MATRIZ DE CUSTOS\n");
+    for (i = 0; i <= n; i++) {
+        for (j = i; j <= n; j++)
+            printf("%d ", e[i][j]);
+        printf("\n");
+    }
+
+    // Printa os indices presentes na matrix root
+    printf("DEBUG - MATRIZ DE CUSTOS\n");
+    for (i = 0; i <= n; i++) {
+        for (j = i; j <= n; j++)
+            printf("%d ", r[i][j]);
+        printf("\n");
+    }
+#endif
 
     return EXIT_SUCCESS;
 }
