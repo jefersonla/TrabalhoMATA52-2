@@ -1,19 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include "libs/arvore.h"
 
 /*
-typedef struct{
-    int chave;
-    int freq;
-}Chaves;
-*/
-
-/*
  * Assumindo que OPTIMAL-BST(p, q, n) - return e, root
- * aonde p e q são as frequencias e chaves
- * ! TEM QUE VERIFICAR OS INDICES... quando é 0 e quando é 1
+ * aonde 'p' e 'q' são as frequencias de acesso (válido, inválido)
+ * e 'e' e 'root', são a matriz de custos e a matriz de indices
+ * respectivamente
  */
 void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
     int i, l, j, r, t, menor, indice_menor;
@@ -56,6 +49,8 @@ void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
                 }
             }
 
+            // Como ainda falta o peso adicionamos esse a
+            // matriz de custos, e atualizamos a matriz de indices
             e[i][j] = w[i][j] + menor;
             root[i][j] = indice_menor;
         }
@@ -73,12 +68,14 @@ int main(int argc, char *argv[]){
     scanf("%d", &n);
 
     /* Entradas */
-    int k[n + 1];       // Chaves Entradas
-    int p[n + 1];       // Custo válido
-    int q[n + 1];     // Custo inválido
+    // Como os indices podem acabar em n inicializamos
+    // todos os vetores e matrizes com n + 1 posições
+    int k[n + 1];           // Chaves Entradas
+    int p[n + 1];           // Custo válido
+    int q[n + 1];           // Custo inválido
     /* Saidas */
-    int e[n + 1][n + 1];  // Custos
-    int r[n + 1][n + 1]; // Ordem
+    int e[n + 1][n + 1];    // Custos resultantes
+    int r[n + 1][n + 1];    // Indices resultantes
 
     // Chaves
     for(i = 1; i <= n; i++)
