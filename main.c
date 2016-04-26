@@ -30,6 +30,7 @@ void imprimirArvore(noArvoreInt *a){
     }
 }
 
+// Adiciona os nós
 noArvoreInt *adicionaNo(noArvoreInt *pai, int *chave, int n, int r[][n+1], int i, int j){
     noArvoreInt *p;
 
