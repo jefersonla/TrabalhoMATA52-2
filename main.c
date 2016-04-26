@@ -22,8 +22,8 @@ void optimalBST(Chaves *chave, int n, int *e[n + 1], int *root[n]){
 
     // Inicializa os valores - Falta verificar a questão dos indices
     for(i = 0; i < (n + 1); i++){
-        e[i, i - 1] = chave[i-1].chave;
-        w[i, i - 1] = chave[i-1].chave;
+        e[i][i - 1] = chave[i-1].chave;
+        w[i][i - 1] = chave[i-1].chave;
     }
 
     for(l = 0; l < n; l++){
