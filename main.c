@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "libs/arvore.h"
 
 /*
@@ -14,36 +15,56 @@ typedef struct{
  * aonde p e q são as frequencias e chaves
  * ! TEM QUE VERIFICAR OS INDICES... quando é 0 e quando é 1
  */
-void optimalBST(int *p, int *q, int n, int e[][n], int root[][n]){
-    int i, l, j, r, t;
-    int w[n+1][n];
+void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
+    int i, l, j, r, t, menor, indice_menor;
+    int w[n+1][n+1];      // Pesos
 
-    // Inicializa os valores - Falta verificar a questão dos indices
-    for(i = 0; i < (n + 1); i++){
-        e[i][i - 1] = q[i-1];
-        w[i][i - 1] = q[i-1];
+    // Inicializa os valores
+    for(i = 0; i <= n; i++){
+        e[i][i] = q[i];
+        w[i][i] = q[i];
+
+        for(j = i + 1; j <= n; j++)
+            w[i][j] = w[i][j-1] + p[j] + q[j];
     }
 
-    for(l = 0; l < n; l++){
-        for(i = 0; i < (n - l + 1); i++){
-            j = i + l - 1;
-            e[i][j] = -1;
-            w[i][j] = w[i][j - 1] + q[j] + p[j];
+    // Constroi a matriz de indices e inicializa os valores de e[i][j]
+    for(i = 0; i <= (n - 1); i++){
+        j = i +1;
+        e[i][j] = e[i][i] + e[j][j] + w[i][j];
+        root[i][j] = j;
+    }
 
-            for(r = i; r <= j; r++){
-                t = e[i][r - 1] + e[r + 1][j] + w[i][j];
-                if(t < e[i][j]){
-                    e[i][j] = t;
-                    root[i][j] = r;
+    for(l = 2; l <= n; l++){
+        for(i = 0; i <= (n - l); i++){
+            j = i + l;
+
+            //e[i][j] = UINT32_MAX;
+            //w[i][j] = w[i][j - 1] + p[j] + q[j];
+
+            // Como inicializamos e + 1
+            indice_menor = root[i][j-1];
+            menor = e[i][indice_menor - 1] + e[indice_menor][j];
+
+            for(r = indice_menor; r <= root[i+1][j]; r++){
+                // Calculamos o custo atual sem a adição do peso
+                t = e[i][r - 1] + e[r][j];
+                // Se ele é menor que o menor
+                if(t < menor){
+                    menor = t;
+                    indice_menor = r;
                 }
             }
+
+            e[i][j] = w[i][j] + menor;
+            root[i][j] = indice_menor;
         }
     }
 }
 
 int main(int argc, char *argv[]){
     int n, i;
-    ArvoreInt a;            // Arvore de Inteiros
+    ArvoreInt a;    // Arvore de Inteiros
 
     // Inicializa a arvore
     inicializa(&a);
@@ -52,27 +73,27 @@ int main(int argc, char *argv[]){
     scanf("%d", &n);
 
     /* Entradas */
-    int chave[n];   // Chaves Entradas
-    int p[n];       // Custo válido
-    int q[n+1];     // Custo inválido
+    int k[n + 1];       // Chaves Entradas
+    int p[n + 1];       // Custo válido
+    int q[n + 1];     // Custo inválido
     /* Saidas */
-    int e[n+1][n];  // Resultado
-    int root[n][n]; // Resultado
+    int e[n + 1][n + 1];  // Custos
+    int r[n + 1][n + 1]; // Ordem
 
     // Chaves
-    for(i = 0; i < n; i++)
-        scanf("%d ", &chave[i]);
+    for(i = 1; i <= n; i++)
+        scanf("%d ", &k[i]);
 
     // Probabilidades acesso válido
-    for(i = 0; i < n; i++)
+    for(i = 1; i <= n; i++)
         scanf("%d ", &p[i]);
 
     // Probabilidades acesso inválido
-    for(i = 0; i < (n + 1); i++)
+    for(i = 0; i <= n; i++)
         scanf("%d ", &q[i]);
 
     /* Optimal BST */
-    optimalBST(p, q, n, e, root);
+    optimalBST(p, q, n, e, r);
 
     return EXIT_SUCCESS;
 }
