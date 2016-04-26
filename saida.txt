@@ -1,0 +1,13 @@
+chave: D0 fesq: nil fdir: nil
+chave: 1 fesq: D0 fdir: 2
+chave: D1 fesq: nil fdir: nil
+chave: 2 fesq: D1 fdir: D2
+chave: D2 fesq: nil fdir: nil
+chave: 3 fesq: 1 fdir: 6
+chave: D3 fesq: nil fdir: nil
+chave: 4 fesq: D3 fdir: D4
+chave: D4 fesq: nil fdir: nil
+chave: 5 fesq: 4 fdir: D5
+chave: D5 fesq: nil fdir: nil
+chave: 6 fesq: 5 fdir: D6
+chave: D6 fesq: nil fdir: nil

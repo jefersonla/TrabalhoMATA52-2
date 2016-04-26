@@ -1,3 +1,14 @@
+/*!
+ * Trabalho I de MATA52 - Analise e Projetos de Algoritmos
+ * 
+ * Implementação Arvore de Busca Binária Otima
+ *
+ * Alunos:
+ * 	Airton Serra Ribeiro Sena
+ * 	Jeferson Lima de Almeida
+ * 	Wilton Leonardo Carvalho da Silva Junior
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "libs/arvore.h"
@@ -20,13 +31,13 @@ int cont;
 void imprimirArvore(noArvoreInt *a){
     if(a){
         imprimirArvore(a->no_esq);
-        if((a->no_esq == NULL) && (a->no_dir == NULL))
+        if((a->no_esq == NULL) && (a->no_dir == NULL)){
             printf("chave: D%d fesq: nil fdir: nil\n", cont);
             cont++;
             printf("chave: %d fesq: D%d fdir: D%d\n", a->chave, (cont - 1), cont);
             printf("chave: D%d fesq: nil fdir: nil\n", cont);
             cont++;
-            
+	}           
         else if((a->no_esq == NULL) || (a->no_dir == NULL)){
             if((a->no_esq == NULL)){
                 printf("chave: D%d fesq: nil fdir: nil\n", cont);
