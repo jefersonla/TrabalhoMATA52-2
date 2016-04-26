@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
 #include "libs/arvore.h"
 
 #define MAX_CHAVES 1000
 
+/*
 typedef struct{
     int chave;
     int freq;
 }Chaves;
+*/
 
 /*
  * Assumindo que OPTIMAL-BST(p, q, n) - return e, root
@@ -45,9 +45,7 @@ void optimalBST(int *p, int *q, int n, int *e[n + 1], int *root[n]){
 
 int main(int argc, char *argv[]){
     int n, i;
-    char opcao[14];         // Opção
     ArvoreInt a;            // Arvore de Inteiros
-    Chaves chave[MAX_CHAVES];   // Chaves Entradas
 
     // Inicializa a arvore
     inicializa(&a);
@@ -55,16 +53,28 @@ int main(int argc, char *argv[]){
     // Numero de entradas
     scanf("%d", &n);
 
+    /* Entradas */
+    int chave[MAX_CHAVES];  // Chaves Entradas
+    int p[MAX_CHAVES];      // Custo válido
+    int q[MAX_CHAVES];      // Custo inválido
+    /* Saidas */
+    int e[n+1][n];          // Resultado
+    int root[n][n];         // Resultado
+
     // Chaves
     for(i = 0; i < n; i++)
-        scanf("%d ", &chave[i].chave);
+        scanf("%d ", &chave[i]);
 
-    // Probabilidades
+    // Probabilidades acesso válido
     for(i = 0; i < n; i++)
-        scanf("%d ", &chave[i].freq);
+        scanf("%d ", &p[i]);
+
+    // Probabilidades acesso inválido
+    for(i = 0; i < (n + 1); i++)
+        scanf("%d ", &q[i]);
 
     /* Optimal BST */
-
+    optimalBST(p, q, n, e, root);
 
     return EXIT_SUCCESS;
 }
