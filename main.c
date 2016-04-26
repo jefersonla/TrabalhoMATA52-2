@@ -16,8 +16,9 @@ void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
 
     // Inicializa os valores
     for(i = 0; i <= n; i++){
-        e[i][i] = q[i];
         w[i][i] = q[i];
+        e[i][i] = q[i];
+        root[i][i] = 0;
 
         for(j = i + 1; j <= n; j++)
             w[i][j] = w[i][j-1] + p[j] + q[j];
@@ -41,7 +42,7 @@ void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
             indice_menor = root[i][j-1];
             menor = e[i][indice_menor - 1] + e[indice_menor][j];
 
-            for(r = indice_menor; r <= root[i+1][j]; r++){
+            for(r = indice_menor + 1; r <= root[i+1][j]; r++){
                 // Calculamos o custo atual sem a adição do peso
                 t = e[i][r - 1] + e[r][j];
                 // Se ele é menor que o menor
@@ -81,15 +82,15 @@ int main(int argc, char *argv[]){
 
     // Chaves
     for(i = 1; i <= n; i++)
-        scanf("%d ", &k[i]);
+        scanf("%d", &k[i]);
 
     // Probabilidades acesso válido
     for(i = 1; i <= n; i++)
-        scanf("%d ", &p[i]);
+        scanf("%d", &p[i]);
 
     // Probabilidades acesso inválido
     for(i = 0; i <= n; i++)
-        scanf("%d ", &q[i]);
+        scanf("%d", &q[i]);
 
     /* Optimal BST */
     optimalBST(p, q, n, e, r);
@@ -104,7 +105,7 @@ int main(int argc, char *argv[]){
     }
 
     // Printa os indices presentes na matrix root
-    printf("DEBUG - MATRIZ DE CUSTOS\n");
+    printf("DEBUG - MATRIZ DE INDICES\n");
     for (i = 0; i <= n; i++) {
         for (j = i; j <= n; j++)
             printf("%d ", r[i][j]);
