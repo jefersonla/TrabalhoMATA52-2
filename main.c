@@ -2,7 +2,63 @@
 #include <stdlib.h>
 #include "libs/arvore.h"
 
+// Comente a linha abaixo para a entrega
 #define DEBUG
+
+/*!
+ * \brief imprimirArvore Imprime a árvore binária
+ *
+ * Imprime a árvore binária, mostrando os nós a direita e a esquerda
+ * de uma visualização em ordem da mesma
+ * Obs.: A sequência nil indica a falta de próximo nó
+ *
+ * \param a Árvore a ser impressa
+ */
+void imprimirArvore(noArvoreInt *a){
+    if(a){
+        imprimirArvore(a->no_esq);
+        if((a->no_esq == NULL) && (a->no_dir == NULL))
+            printf("chave: %d fesq: nil fdir: nil\n", a->chave);
+        else if((a->no_esq == NULL) || (a->no_dir == NULL))
+        if((a->no_esq == NULL))
+            printf("chave: %d fesq: nil fdir: %d\n", a->chave, a->no_dir->chave);
+        else
+            printf("chave: %d fesq: %d fdir: nil\n", a->chave, a->no_esq->chave);
+        else
+            printf("chave: %d fesq: %d fdir: %d\n", a->chave, a->no_esq->chave, a->no_dir->chave);
+        imprimirArvore(a->no_dir);
+    }
+}
+
+noArvoreInt *adicionaNo(noArvoreInt *pai, int *chave, int n, int r[][n+1], int i, int j){
+    noArvoreInt *p;
+
+    if(i == j){
+        p = NULL;
+    }
+    else{
+        p = (ArvoreInt) malloc (sizeof(noArvoreInt));
+        p->no_pai = pai;
+        p->chave = chave[r[i][j]];
+        p->no_esq = adicionaNo(p, chave, n, r, i, r[i][j] - 1);
+        p->no_dir = adicionaNo(p, chave, n, r, r[i][j], j);
+    }
+
+    return p;
+}
+
+// Constroi a arvore
+void constroiArvore(ArvoreInt *a, int *chave, int n, int r[][n+1], int i, int j){
+    noArvoreInt *p;
+
+    p = (ArvoreInt) malloc (sizeof(noArvoreInt));
+    p->no_pai = NULL;
+    p->chave = chave[r[i][j]];
+    p->no_esq = adicionaNo(p, chave, n, r, i, r[i][j] - 1);
+    p->no_dir = adicionaNo(p, chave, n, r, r[i][j], j);
+
+    *a = p;
+}
 
 /*
  * Assumindo que OPTIMAL-BST(p, q, n) - return e, root
@@ -101,6 +157,7 @@ int main(int argc, char *argv[]){
     for (i = 0; i <= n; i++) {
         for (j = i; j <= n; j++)
             printf("%d ", e[i][j]);
+
         printf("\n");
     }
 
@@ -109,9 +166,16 @@ int main(int argc, char *argv[]){
     for (i = 0; i <= n; i++) {
         for (j = i; j <= n; j++)
             printf("%d ", r[i][j]);
+
         printf("\n");
     }
 #endif
+
+    // Constroi arvore com as tabelas
+    constroiArvore(&a, k, n, r, 0, n);
+
+    // Imprime a arvore construida
+    imprimirArvore(a);
 
     return EXIT_SUCCESS;
 }
