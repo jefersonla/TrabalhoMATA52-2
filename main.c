@@ -14,7 +14,7 @@ typedef struct{
  * aonde p e q são as frequencias e chaves
  * ! TEM QUE VERIFICAR OS INDICES... quando é 0 e quando é 1
  */
-void optimalBST(int *p, int *q, int n, int e[n + 1][], int root[n][]){
+void optimalBST(int *p, int *q, int n, int e[][n], int root[][n]){
     int i, l, j, r, t;
     int w[n+1][n];
 
