@@ -3,7 +3,7 @@
 #include "libs/arvore.h"
 
 // Comente a linha abaixo para a entrega
-#define DEBUG
+//#define DEBUG
 
 /*!
  * \brief imprimirArvore Imprime a árvore binária
