@@ -5,6 +5,9 @@
 // Comente a linha abaixo para a entrega
 //#define DEBUG
 
+// Contador global
+int cont;
+
 /*!
  * \brief imprimirArvore Imprime a árvore binária
  *
@@ -18,14 +21,27 @@ void imprimirArvore(noArvoreInt *a){
     if(a){
         imprimirArvore(a->no_esq);
         if((a->no_esq == NULL) && (a->no_dir == NULL))
-            printf("chave: %d fesq: nil fdir: nil\n", a->chave);
-        else if((a->no_esq == NULL) || (a->no_dir == NULL))
-        if((a->no_esq == NULL))
-            printf("chave: %d fesq: nil fdir: %d\n", a->chave, a->no_dir->chave);
-        else
-            printf("chave: %d fesq: %d fdir: nil\n", a->chave, a->no_esq->chave);
-        else
+            printf("chave: D%d fesq: nil fdir: nil\n", cont);
+            cont++;
+            printf("chave: %d fesq: D%d fdir: D%d\n", a->chave, (cont - 1), cont);
+            printf("chave: D%d fesq: nil fdir: nil\n", cont);
+            cont++;
+            
+        else if((a->no_esq == NULL) || (a->no_dir == NULL)){
+            if((a->no_esq == NULL)){
+                printf("chave: D%d fesq: nil fdir: nil\n", cont);
+                printf("chave: %d fesq: D%d fdir: %d\n", a->chave, cont, a->no_dir->chave);
+                cont++;
+            }
+            else{
+                printf("chave: %d fesq: %d fdir: D%d\n", a->chave, a->no_esq->chave, cont);
+                printf("chave: D%d fesq: nil fdir: nil\n", cont);
+                cont++;
+            }
+        }
+        else{
             printf("chave: %d fesq: %d fdir: %d\n", a->chave, a->no_esq->chave, a->no_dir->chave);
+        }
         imprimirArvore(a->no_dir);
     }
 }
@@ -92,9 +108,6 @@ void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
         for(i = 0; i <= (n - l); i++){
             j = i + l;
 
-            //e[i][j] = UINT32_MAX;
-            //w[i][j] = w[i][j - 1] + p[j] + q[j];
-
             // Como inicializamos e + 1
             indice_menor = root[i][j-1];
             menor = e[i][indice_menor - 1] + e[indice_menor][j];
@@ -120,6 +133,9 @@ void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
 int main(int argc, char *argv[]){
     int n, i, j;
     ArvoreInt a;    // Arvore de Inteiros
+    
+    // Contador
+    cont = 0;
 
     // Inicializa a arvore
     inicializa(&a);
