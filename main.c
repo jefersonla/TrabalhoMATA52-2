@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include "libs/arvore.h"
 
-#define MAX_CHAVES 1000
-
 /*
 typedef struct{
     int chave;
@@ -16,7 +14,7 @@ typedef struct{
  * aonde p e q são as frequencias e chaves
  * ! TEM QUE VERIFICAR OS INDICES... quando é 0 e quando é 1
  */
-void optimalBST(int *p, int *q, int n, int *e[n + 1], int *root[n]){
+void optimalBST(int *p, int *q, int n, int e[n + 1][], int root[n][]){
     int i, l, j, r, t;
     int w[n+1][n];
 
@@ -54,12 +52,12 @@ int main(int argc, char *argv[]){
     scanf("%d", &n);
 
     /* Entradas */
-    int chave[MAX_CHAVES];  // Chaves Entradas
-    int p[MAX_CHAVES];      // Custo válido
-    int q[MAX_CHAVES];      // Custo inválido
+    int chave[n];   // Chaves Entradas
+    int p[n];       // Custo válido
+    int q[n+1];     // Custo inválido
     /* Saidas */
-    int e[n+1][n];          // Resultado
-    int root[n][n];         // Resultado
+    int e[n+1][n];  // Resultado
+    int root[n][n]; // Resultado
 
     // Chaves
     for(i = 0; i < n; i++)
