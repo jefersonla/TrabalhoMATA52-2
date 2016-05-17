@@ -32,21 +32,21 @@ void imprimirArvore(noArvoreInt *a){
     if(a){
         imprimirArvore(a->no_esq);
         if((a->no_esq == NULL) && (a->no_dir == NULL)){
-            printf("chave: D%d fesq: nil fdir: nil\n", cont);
+            printf("chave: d%d fesq: nil fdir: nil\n", cont);
             cont++;
-            printf("chave: %d fesq: D%d fdir: D%d\n", a->chave, (cont - 1), cont);
-            printf("chave: D%d fesq: nil fdir: nil\n", cont);
+            printf("chave: %d fesq: d%d fdir: d%d\n", a->chave, (cont - 1), cont);
+            printf("chave: d%d fesq: nil fdir: nil\n", cont);
             cont++;
 	}           
         else if((a->no_esq == NULL) || (a->no_dir == NULL)){
             if((a->no_esq == NULL)){
-                printf("chave: D%d fesq: nil fdir: nil\n", cont);
-                printf("chave: %d fesq: D%d fdir: %d\n", a->chave, cont, a->no_dir->chave);
+                printf("chave: d%d fesq: nil fdir: nil\n", cont);
+                printf("chave: %d fesq: d%d fdir: %d\n", a->chave, cont, a->no_dir->chave);
                 cont++;
             }
             else{
-                printf("chave: %d fesq: %d fdir: D%d\n", a->chave, a->no_esq->chave, cont);
-                printf("chave: D%d fesq: nil fdir: nil\n", cont);
+                printf("chave: %d fesq: %d fdir: d%d\n", a->chave, a->no_esq->chave, cont);
+                printf("chave: d%d fesq: nil fdir: nil\n", cont);
                 cont++;
             }
         }
@@ -94,9 +94,9 @@ void constroiArvore(ArvoreInt *a, int *chave, int n, int r[][n+1], int i, int j)
  * e 'e' e 'root', são a matriz de custos e a matriz de indices
  * respectivamente
  */
-void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
-    int i, l, j, r, t, menor, indice_menor;
-    int w[n+1][n+1];      // Pesos
+void optimalBST(float *p, float *q, int n, float e[][n+1], int root[][n+1]){
+    int i, l, j, r, indice_menor;
+    float menor, t, w[n+1][n+1];      // Pesos
 
     // Inicializa os valores
     for(i = 0; i <= n; i++){
@@ -142,7 +142,7 @@ void optimalBST(int *p, int *q, int n, int e[][n+1], int root[][n+1]){
 }
 
 int main(int argc, char *argv[]){
-    int n, i, j;
+    int n, i;
     ArvoreInt a;    // Arvore de Inteiros
     
     // Contador
@@ -158,10 +158,10 @@ int main(int argc, char *argv[]){
     // Como os indices podem acabar em n inicializamos
     // todos os vetores e matrizes com n + 1 posições
     int k[n + 1];           // Chaves Entradas
-    int p[n + 1];           // Custo válido
-    int q[n + 1];           // Custo inválido
+    float p[n + 1];           // Custo válido
+    float q[n + 1];           // Custo inválido
     /* Saidas */
-    int e[n + 1][n + 1];    // Custos resultantes
+    float e[n + 1][n + 1];    // Custos resultantes
     int r[n + 1][n + 1];    // Indices resultantes
 
     // Chaves
@@ -170,11 +170,11 @@ int main(int argc, char *argv[]){
 
     // Probabilidades acesso válido
     for(i = 1; i <= n; i++)
-        scanf("%d", &p[i]);
+        scanf("%f", &p[i]);
 
     // Probabilidades acesso inválido
     for(i = 0; i <= n; i++)
-        scanf("%d", &q[i]);
+        scanf("%f", &q[i]);
 
     /* Optimal BST */
     optimalBST(p, q, n, e, r);
