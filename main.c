@@ -16,6 +16,12 @@
 // Comente a linha abaixo para a entrega
 //#define DEBUG
 
+/* Estrutura de Itens */
+typedef struct{
+    float valor;
+    float peso;
+} Itens;
+
 // Contador global
 int cont;
 
@@ -88,62 +94,12 @@ void constroiArvore(ArvoreInt *a, int *chave, int n, int r[][n+1], int i, int j)
     *a = p;
 }
 
-/*
- * Assumindo que OPTIMAL-BST(p, q, n) - return e, root
- * aonde 'p' e 'q' são as frequencias de acesso (válido, inválido)
- * e 'e' e 'root', são a matriz de custos e a matriz de indices
- * respectivamente
- */
-void optimalBST(float *p, float *q, int n, float e[][n+1], int root[][n+1]){
-    int i, l, j, r, indice_menor;
-    float menor, t, w[n+1][n+1];      // Pesos
 
-    // Inicializa os valores
-    for(i = 0; i <= n; i++){
-        w[i][i] = q[i];
-        e[i][i] = q[i];
-        root[i][i] = 0;
-
-        for(j = i + 1; j <= n; j++)
-            w[i][j] = w[i][j-1] + p[j] + q[j];
-    }
-
-    // Constroi a matriz de indices e inicializa os valores de e[i][j]
-    for(i = 0; i <= (n - 1); i++){
-        j = i +1;
-        e[i][j] = e[i][i] + e[j][j] + w[i][j];
-        root[i][j] = j;
-    }
-
-    for(l = 2; l <= n; l++){
-        for(i = 0; i <= (n - l); i++){
-            j = i + l;
-
-            // Como inicializamos e + 1
-            indice_menor = root[i][j-1];
-            menor = e[i][indice_menor - 1] + e[indice_menor][j];
-
-            for(r = indice_menor + 1; r <= root[i+1][j]; r++){
-                // Calculamos o custo atual sem a adição do peso
-                t = e[i][r - 1] + e[r][j];
-                // Se ele é menor que o menor
-                if(t < menor){
-                    menor = t;
-                    indice_menor = r;
-                }
-            }
-
-            // Como ainda falta o peso adicionamos esse a
-            // matriz de custos, e atualizamos a matriz de indices
-            e[i][j] = w[i][j] + menor;
-            root[i][j] = indice_menor;
-        }
-    }
-}
 
 int main(int argc, char *argv[]){
     int n, i;
-    ArvoreInt a;    // Arvore de Inteiros
+    float m;
+    ArvoreInt a;
     
     // Contador
     cont = 0;
@@ -155,29 +111,17 @@ int main(int argc, char *argv[]){
     scanf("%d", &n);
 
     /* Entradas */
-    // Como os indices podem acabar em n inicializamos
-    // todos os vetores e matrizes com n + 1 posições
-    int k[n + 1];           // Chaves Entradas
-    float p[n + 1];           // Custo válido
-    float q[n + 1];           // Custo inválido
-    /* Saidas */
-    float e[n + 1][n + 1];    // Custos resultantes
-    int r[n + 1][n + 1];    // Indices resultantes
+    Itens itens[n+1];
 
-    // Chaves
-    for(i = 1; i <= n; i++)
-        scanf("%d", &k[i]);
+    for(i = 0; i < n; i++)
+        scanf("%f", &itens[i].valor);
 
-    // Probabilidades acesso válido
-    for(i = 1; i <= n; i++)
-        scanf("%f", &p[i]);
+    for(i = 0; i < n; i++)
+        scanf("%f", &itens[i].peso);
 
-    // Probabilidades acesso inválido
-    for(i = 0; i <= n; i++)
-        scanf("%f", &q[i]);
+    scanf("%f", &m);
 
-    /* Optimal BST */
-    optimalBST(p, q, n, e, r);
+
 
 #ifdef DEBUG
     // Printa o custo da matriz e
@@ -198,12 +142,6 @@ int main(int argc, char *argv[]){
         printf("\n");
     }
 #endif
-
-    // Constroi arvore com as tabelas
-    constroiArvore(&a, k, n, r, 0, n);
-
-    // Imprime a arvore construida
-    imprimirArvore(a);
 
     return EXIT_SUCCESS;
 }
