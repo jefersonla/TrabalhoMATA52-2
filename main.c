@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 // Comente a linha abaixo para a entrega
-#define DEBUG
+//#define DEBUG
 
 /* Tipo de itens que podem ser postos na mochila */
 typedef struct{
@@ -193,31 +193,44 @@ int main(int argc, char *argv[]){
 
     printf("\n\nA mochila ira carregar os seguintes Item: ");
     for(i = 0; i < n; i++) {
-        if(res_fracionaria[i] != 0){
+        if(res_fracionaria[i] != 0.0){
             printf("i%d %1.f ", i + 1, res_fracionaria[i]);
             saida += res_fracionaria[i] * itens[i].valor;
         }
     }
 
     printf("\n Lucro Maximo: %.1f\n", saida);
-#endif
+#else
+    float saida = 0;
 
-#ifndef DEBUG
+    // Acumula o resultado total
+    for(i = 0; i < n; i++) {
+        saida += res_fracionaria[i] * itens[i].valor;
+    }
+
+    // Imprime o resultado final - Fracionada
+    printf("%1.f\n", saida);
+
     // Imprime as respostas fracionárias
     for(i = 0; i < n; i++) {
         if(res_fracionaria[i] != 0){
             printf("i%d %1.f\n", i + 1, res_fracionaria[i]);
-            saida += res_fracionaria[i] * itens[i].valor;
         }
     }
 
-    printf("\n");
-
-    // Imprime as respostas binárias
-        for(i = 0; i < n; i++)
+    // Acumula o resultado final binária
+    for(i = 0; i < n; i++)
         if(res_binario[i]){
-            printf("%d \n", i + 1);
             saida += itens[i].valor;
+        }
+
+    // Imprime o resultado final - Binária
+    printf("\n%1.f\n", saida);
+
+    // Imprime os itens binários
+    for(i = 0; i < n; i++)
+        if(res_binario[i]){
+            printf("i%d\n", i + 1);
         }
 #endif
 
