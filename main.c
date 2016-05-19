@@ -22,6 +22,7 @@ typedef struct{
     float proporcao;
     float valor;
     float peso;
+    int indice;
 } Item;
 
 // Variaveis auxiliares
@@ -148,6 +149,9 @@ int main(int argc, char *argv[]){
         // Proporção
         itens[i].proporcao  = itens[i].valor / itens[i].peso;
 
+        // Indice
+        itens[i].indice = i + 1;
+
         // Inicializa res_fracionaria
         res_fracionaria[i] = 0;
 
@@ -173,14 +177,14 @@ int main(int argc, char *argv[]){
 
     /* Resultado Binário */
     printf("Binario\n");
-    printf("\n\tItem\tPeso\tValor\tSelecionado");
+    printf("\n\tItem\tIndice\tPeso\tValor\tSelecionado");
     for(i = 0; i < n; i++)
-        printf("\n\t%d\t%.1f\t%.1f\t%d", i + 1, itens[i].peso, itens[i].valor, res_binario[i]);
+        printf("\n\t%d\t%d\t%.1f\t%.1f\t%d", i + 1, itens[i].indice, itens[i].peso, itens[i].valor, res_binario[i]);
 
     printf("\n\nA mochila ira carregar os seguintes Item: ");
     for(i = 0; i < n; i++)
         if(res_binario[i]){
-            printf("%d ", i + 1);
+            printf("%d ", itens[i].indice);
             saida += itens[i].valor;
         }
 
@@ -189,15 +193,15 @@ int main(int argc, char *argv[]){
     /* Resultado Fracionário */
     saida = 0;
     printf("\n\nFracionario\n");
-    printf("\n\tItem\tPeso\tValor\tQuantidade");
+    printf("\n\tItem\tIndice\tPeso\tValor\tQuantidade");
     for(i = 0; i < n; i++){
-        printf("\n\t%d\t%.1f\t%.1f\t%.1f\t", i + 1, itens[i].peso, itens[i].valor, res_fracionaria[i]);
+        printf("\n\t%d\t%d\t%.1f\t%.1f\t%.1f\t", i + 1, itens[i].indice, itens[i].peso, itens[i].valor, res_fracionaria[i]);
     }
 
     printf("\n\nA mochila ira carregar os seguintes Item: ");
     for(i = 0; i < n; i++) {
         if(res_fracionaria[i] != 0.0){
-            printf("i%d %.1f ", i + 1, res_fracionaria[i]);
+            printf("i%d %.1f ", itens[i].indice, res_fracionaria[i]);
             saida += res_fracionaria[i] * itens[i].valor;
         }
     }
@@ -217,7 +221,7 @@ int main(int argc, char *argv[]){
     // Imprime as respostas fracionárias
     for(i = 0; i < n; i++) {
         if(res_fracionaria[i] != 0){
-            printf("i%d %.1f\n", i + 1, res_fracionaria[i]);
+            printf("i%d %.1f\n", itens[i].indice, res_fracionaria[i]);
         }
     }
 
@@ -233,7 +237,7 @@ int main(int argc, char *argv[]){
     // Imprime os itens binários
     for(i = 0; i < n; i++)
         if(res_binario[i]){
-            printf("i%d\n", i + 1);
+            printf("i%d\n", itens[i].indice);
         }
 #endif
 
