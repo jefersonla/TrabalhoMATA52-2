@@ -10,27 +10,22 @@ int y[max],x[max],fp=-1,fw;
 void get()
 {
     scanf("%d",&n);
-
     for(i=0; i<n; i++)
         scanf("%f", &p[i]);
-
     for(i=0; i<n; i++)
         scanf("%f",&w[i]);
-
     scanf("%f",&m);
 }
 
 void show()
 {
     float s=0;                          //Fracionada
-    for(i=0; i<n; i++)
-    {
+    for(i=0; i<n; i++) {
         s += fracRe[i]*p[i];
     }
     printf("%.1f",s);
 
-    for(i=0; i<n; i++)
-    {
+    for(i=0; i<n; i++) {
         if(fracRe[i] != 0.0)
             printf("\ni%d %.1f\t",i+1,fracRe[i]);
     }
@@ -125,29 +120,24 @@ void knapsack(int k,float cp,float cw)
     }
 }
 
-void Rknapsack()
-{
+void Rknapsack() {
     int k = 0;
     float cp = 0;
     float cw = 0;
     int j;
 
-    for(j = 0; j<n; j++)
-    {
+    for(j = 0; j<n; j++)    {
         fracRe[j] = 0;
     }
 
-    while((cw < m)&&(k < n))
-    {
-        if(cw + w[k] <= m)
-        {
+    while((cw < m)&&(k < n)) {
+        if(cw + w[k] <= m) {
             fracRe[k] = 1;
             cw += w[k];
             cp += p[k];
             k++;
         }
-        else
-        {
+        else {
             fracRe[k] = (m - cw)/w[k];
             cw = m;
             cp += fracRe[k]*p[k];

@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 // Comente a linha abaixo para a entrega
-//#define DEBUG
+#define DEBUG
 
 /* Tipo de itens que podem ser postos na mochila */
 typedef struct{
@@ -112,9 +112,9 @@ void RKnapsack(int n, float mochila, Item *itens, float *res_frac){
         }
         // Caso contrário, adicionamos apenas uma parte do item
         else{
+            res_frac[i] = (mochila - peso_atual) / itens[i].peso;
             peso_atual = mochila;
             valor_atual += res_frac[i] * itens[i].valor;
-            res_frac[i] = (mochila - peso_atual) / itens[i].peso;
             i++;
         }
     }
@@ -150,6 +150,9 @@ int main(int argc, char *argv[]){
 
         // Inicializa res_fracionaria
         res_fracionaria[i] = 0;
+
+        // Inicializa res_binario
+        res_binario[i] = 0;
     }
 
     // Tamanho da mochila
@@ -186,7 +189,7 @@ int main(int argc, char *argv[]){
     /* Resultado Fracionário */
     saida = 0;
     printf("\n\nFracionario\n");
-    printf("\n\tItem\tPeso\tValor\tQuantidade Selecionada");
+    printf("\n\tItem\tPeso\tValor\tQuantidade");
     for(i = 0; i < n; i++){
         printf("\n\t%d\t%.1f\t%.1f\t%.1f\t", i + 1, itens[i].peso, itens[i].valor, res_fracionaria[i]);
     }
@@ -194,7 +197,7 @@ int main(int argc, char *argv[]){
     printf("\n\nA mochila ira carregar os seguintes Item: ");
     for(i = 0; i < n; i++) {
         if(res_fracionaria[i] != 0.0){
-            printf("i%d %1.f ", i + 1, res_fracionaria[i]);
+            printf("i%d %.1f ", i + 1, res_fracionaria[i]);
             saida += res_fracionaria[i] * itens[i].valor;
         }
     }
@@ -209,12 +212,12 @@ int main(int argc, char *argv[]){
     }
 
     // Imprime o resultado final - Fracionada
-    printf("%1.f\n", saida);
+    printf("%.1f\n", saida);
 
     // Imprime as respostas fracionárias
     for(i = 0; i < n; i++) {
         if(res_fracionaria[i] != 0){
-            printf("i%d %1.f\n", i + 1, res_fracionaria[i]);
+            printf("i%d %.1f\n", i + 1, res_fracionaria[i]);
         }
     }
 
