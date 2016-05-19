@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 // Comente a linha abaixo para a entrega
-#define DEBUG
+//#define DEBUG
 
 /* Tipo de itens que podem ser postos na mochila */
 typedef struct{
@@ -222,13 +222,13 @@ int main(int argc, char *argv[]){
     }
 
     // Acumula o resultado final binária
-    for(i = 0; i < n; i++)
+    for(i = 0, saida = 0; i < n; i++)
         if(res_binario[i]){
             saida += itens[i].valor;
         }
 
     // Imprime o resultado final - Binária
-    printf("\n%1.f\n", saida);
+    printf("%.1f\n", saida);
 
     // Imprime os itens binários
     for(i = 0; i < n; i++)
