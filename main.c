@@ -19,20 +19,20 @@
 
 /* Tipo de itens que podem ser postos na mochila */
 typedef struct{
-    float proporcao;
-    float valor;
-    float peso;
+    double proporcao;
+    double valor;
+    double peso;
     int indice;
 } Item;
 
 // Variaveis auxiliares
-float proximo_valor = -1;
+double proximo_valor = -1;
 
 /* Função de corte */
-float Bound(int n, float mochila, Item *itens, int pos_atual, float va, float pa){
+double Bound(int n, double mochila, Item *itens, int pos_atual, double va, double pa){
     int i;
-    float valor_atual = va;
-    float peso_atual = pa;
+    double valor_atual = va;
+    double peso_atual = pa;
 
     // Enquanto houver itens
     for(i = pos_atual; i <= n; i++){
@@ -50,7 +50,7 @@ float Bound(int n, float mochila, Item *itens, int pos_atual, float va, float pa
 }
 
 /* Algoritmo Knapsack Binário */
-void Knapsack(int n, float mochila, Item *itens, int *res_bin, int* aux, int pos_atual, float valor_atual, float peso_atual){
+void Knapsack(int n, double mochila, Item *itens, int *res_bin, int* aux, int pos_atual, double valor_atual, double peso_atual){
     int i;
 
     // Se a posição atual é maior que n paramos a execução
@@ -96,10 +96,10 @@ void Knapsack(int n, float mochila, Item *itens, int *res_bin, int* aux, int pos
 }
 
 /* Algoritmo Knapsack Fracionário */
-void RKnapsack(int n, float mochila, Item *itens, float *res_frac){
+void RKnapsack(int n, double mochila, Item *itens, double *res_frac){
     int i = 0;
-    float valor_atual = 0;
-    float peso_atual = 0;
+    double valor_atual = 0;
+    double peso_atual = 0;
 
     // Enquanto o peso atual for menor que a mochila, e houver itens restante
     while((peso_atual < mochila) && (i < n)){
@@ -129,22 +129,22 @@ int compareItem(const void *iten1, const void *iten2){
 
 int main(int argc, char *argv[]){
     int n, i;
-    float m;
+    double m;
 
     // Numero de entradas
     scanf("%d", &n);
 
     /* Entradas */
-    float res_fracionaria[n];
+    double res_fracionaria[n];
     int res_binario[n];
     int aux_itens[n];
     Item itens[n];
 
     for(i = 0; i < n; i++)
-        scanf("%f", &itens[i].valor);
+        scanf("%lf", &itens[i].valor);
 
     for(i = 0; i < n; i++) {
-        scanf("%f", &itens[i].peso);
+        scanf("%lf", &itens[i].peso);
 
         // Proporção
         itens[i].proporcao  = itens[i].valor / itens[i].peso;
@@ -160,7 +160,7 @@ int main(int argc, char *argv[]){
     }
 
     // Tamanho da mochila
-    scanf("%f", &m);
+    scanf("%lf", &m);
 
     /* Ordena os arrays usando o quicksort */
     qsort(itens, (sizeof(itens) / sizeof(Item)), sizeof(Item), compareItem);
@@ -173,7 +173,7 @@ int main(int argc, char *argv[]){
 
 #ifdef DEBUG
     // Printa o resultado numa forma linda, porém apenas para debug
-    float saida = 0;
+    double saida = 0;
 
     /* Resultado Binário */
     printf("Binario\n");
@@ -208,7 +208,7 @@ int main(int argc, char *argv[]){
 
     printf("\nLucro Maximo: %.1f\n", saida);
 #else
-    float saida = 0;
+    double saida = 0;
 
     // Acumula o resultado total
     for(i = 0; i < n; i++) {
