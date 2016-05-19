@@ -184,7 +184,7 @@ int main(int argc, char *argv[]){
             saida += itens[i].valor;
         }
 
-    printf("\n Lucro Maximo: %.1f ", saida);
+    printf("\nLucro Maximo: %.1f ", saida);
 
     /* Resultado Fracionário */
     saida = 0;
@@ -202,7 +202,7 @@ int main(int argc, char *argv[]){
         }
     }
 
-    printf("\n Lucro Maximo: %.1f\n", saida);
+    printf("\nLucro Maximo: %.1f\n", saida);
 #else
     float saida = 0;
 
