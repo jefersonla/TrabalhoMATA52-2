@@ -177,7 +177,7 @@ int main(int argc, char *argv[]){
     printf("\n\nA mochila ira carregar os seguintes Item: ");
     for(i = 0; i < n; i++)
         if(res_binario[i]){
-            printf("%d \n", i + 1);
+            printf("%d ", i + 1);
             saida += itens[i].valor;
         }
 
@@ -194,7 +194,7 @@ int main(int argc, char *argv[]){
     printf("\n\nA mochila ira carregar os seguintes Item: ");
     for(i = 0; i < n; i++) {
         if(res_fracionaria[i] != 0){
-            printf("i%d %1.f\n", i + 1, res_fracionaria[i]);
+            printf("i%d %1.f ", i + 1, res_fracionaria[i]);
             saida += res_fracionaria[i] * itens[i].valor;
         }
     }
